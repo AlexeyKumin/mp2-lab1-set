@@ -74,18 +74,8 @@ int TSet::operator!=(const TSet &s) const // сравнение
 
 TSet TSet::operator+(const TSet &s) // объединение
 {
-	if (MaxPower >= s.MaxPower)
-	{
-		TSet Temp(MaxPower);
-		Temp.BitField = BitField | s.BitField;
-		return Temp;
-	}
-	else
-	{
-		TSet Temp(s.MaxPower);
-		Temp.BitField = BitField | s.BitField;
-		return Temp;
-	} 
+	TSet Temp(BitField | s.BitField);
+	return Temp;
 }
 
 TSet TSet::operator+(const int Elem) // объединение с элементом
@@ -107,24 +97,13 @@ TSet TSet::operator-(const int Elem) // разность с элементом
 
 TSet TSet::operator*(const TSet &s) // пересечение
 {
-	if (MaxPower >= s.MaxPower)
-	{
-		TSet Temp(s.MaxPower);
-		Temp.BitField = BitField & s.BitField;
+		TSet Temp(BitField & s.BitField);
 		return Temp;
-	}
-	else
-	{
-		TSet Temp(MaxPower);
-		Temp.BitField = BitField & s.BitField;
-		return Temp;
-	}
-
 }
 
 TSet TSet::operator~(void) // дополнение
 {
-	//TSet Temp(*this);НЕРАБОТАЕТ!!!!
+	//TSet Temp(*this);НЕ РАБОТАЕТ!!!!
     //~Temp.BitField;
 	//return Temp;
 	TSet Temp(MaxPower);
