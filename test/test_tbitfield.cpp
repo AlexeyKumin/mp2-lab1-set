@@ -218,9 +218,11 @@ TEST(TBitField, and_operator_applied_to_bitfields_of_non_equal_size)
   bf2.SetBit(3);
 
   // expBf = 00010
+  expBf.SetBit(1);
+  expBf.SetBit(2);
   expBf.SetBit(3);
 
-  EXPECT_EQ(expBf, bf1 & bf2);
+  EXPECT_EQ(expBf, bf1 | bf2);
 }
 
 TEST(TBitField, can_invert_bitfield)
@@ -251,25 +253,6 @@ TEST(TBitField, can_invert_large_bitfield)
   EXPECT_EQ(expNegBf, negBf);
 }
 
-TEST(TBitField, invert_plus_and_operator_on_different_size_bitfield)
-{
-  const int firstSze = 4, secondSize = 8;
-  TBitField firstBf(firstSze), negFirstBf(firstSze), secondBf(secondSize), testBf(secondSize);
-  // firstBf = 0001
-  firstBf.SetBit(0);
-  negFirstBf = ~firstBf;
-  // negFirstBf = 1110
-
-  // secondBf = 00011000
-  secondBf.SetBit(3);
-  secondBf.SetBit(4);
-
-  // testBf = 00001000
-  testBf.SetBit(3);
-
-  EXPECT_EQ(secondBf & negFirstBf, testBf);
-}
-
 TEST(TBitField, can_invert_many_random_bits_bitfield)
 {
   const int size = 38;
@@ -294,6 +277,7 @@ TEST(TBitField, can_invert_many_random_bits_bitfield)
     expNegBf.ClrBit(bits[i]);
 
   EXPECT_EQ(expNegBf, negBf);
+
 }
 
 TEST(TBitField, bitfields_with_different_bits_are_not_equal)
@@ -308,4 +292,38 @@ TEST(TBitField, bitfields_with_different_bits_are_not_equal)
   bf2.SetBit(2);
 
   EXPECT_NE(bf1, bf2);
+}
+
+TEST(TBitField, invert_big_bitfield)
+{
+	const unsigned int size = 1000000;
+	TBitField bf(size), negBf(size), expNegBf(size);
+	bf.SetBit(50000);
+	negBf = ~bf;
+
+	for (unsigned int i = 0; i < size; i++)
+		expNegBf.SetBit(i);
+	expNegBf.ClrBit(50000);
+
+	EXPECT_EQ(expNegBf, negBf);
+}
+
+TEST(TBitField, or_operator_applied_to_bitfields_of_non_equal_size_big)
+{
+	const int size1 = 500000, size2 = 1000000;
+	TBitField bf1(size1), bf2(size2), expBf(size2);
+	bf1 = ~bf1;
+	bf2 = ~bf2;
+	expBf = ~expBf;
+	EXPECT_EQ(expBf, bf1 | bf2);
+}
+
+TEST(TBitField, can_assign_bitfields_of_non_equal_size_big)
+{
+	const int size1 = 500000, size2 = 1000000;
+	TBitField bf1(size1), bf2(size2);
+	bf1 = ~bf1;
+	bf2 = bf1;
+for (int i = 0; i < size1; i++)
+	EXPECT_NE(0, bf2.GetBit(i));
 }

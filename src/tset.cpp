@@ -68,7 +68,6 @@ int TSet::operator==(const TSet &s) const // сравнение
 
 int TSet::operator!=(const TSet &s) const // сравнение
 {
-	
 	return (BitField != s.BitField);
 }
 
@@ -103,9 +102,6 @@ TSet TSet::operator*(const TSet &s) // пересечение
 
 TSet TSet::operator~(void) // дополнение
 {
-	//TSet Temp(*this);НЕ РАБОТАЕТ!!!!
-    //~Temp.BitField;
-	//return Temp;
 	TSet Temp(MaxPower);
 	Temp.BitField = ~this->BitField;
 	return Temp;
