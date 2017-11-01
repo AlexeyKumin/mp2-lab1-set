@@ -117,15 +117,15 @@ TBitField TBitField::operator|(const TBitField &bf) // операция "или"
 	
 	if (BitLen >= bf.BitLen)
 	{
-		TBitField Temp(BitLen);
-		for (int i = 0; i < MemLen; i++)
+		TBitField Temp(*this);
+		for (int i = 0; i < bf.MemLen; i++)
 			Temp.pMem[i] = pMem[i] | bf.pMem[i];
 		return Temp;
 	}
 	else
 	{
-		TBitField Temp(bf.BitLen);
-		for (int i = 0; i < bf.MemLen; i++)
+		TBitField Temp(bf);
+		for (int i = 0; i < MemLen; i++)
 			Temp.pMem[i] = pMem[i] | bf.pMem[i];
 		return Temp;
 	}

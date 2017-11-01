@@ -1,0 +1,7 @@
+﻿  test_tset.cpp
+  test_tbitfield.cpp
+  test_main.cpp
+  Generating Code...
+test_main.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
+  test_bitfield.vcxproj -> C:\Users\1\Desktop\study\mp2-lab1-set\sln\vc10\Debug\test_bitfield.exe
+  test_bitfield.vcxproj -> C:\Users\1\Desktop\study\mp2-lab1-set\sln\vc10\Debug\test_bitfield.pdb (Full PDB)
